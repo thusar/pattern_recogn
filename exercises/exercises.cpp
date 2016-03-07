@@ -14,7 +14,7 @@ int main()
 {
 	cout << "Perceptron with constant increment : 1" << endl;
 	cout << "Perceptron with partial increment  : 2" << endl;
-	cout << "Select method:                        " << endl;
+	cout << "Select method                      : ";
 	int methodNbr;
 	cin >> methodNbr;
 	if (methodNbr == 1)

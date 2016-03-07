@@ -23,14 +23,18 @@ void ConstantPerceptron::Step(DoubleMatrix& w, DoubleMatrix x, double c, double&
     stepNbr ++;
     functionForX = DecisionFunction(w, x);
     cout << stepNbr << ". step:" << endl;
+    stringstream xname;
+    xname << "x(" << stepNbr << "):" << ends;
+    x.NiceVectorOutput(xname.str());
     cout << "wt * x: " << functionForX << endl;
     if (functionForX <= 0)
     {
         w = CalculateIncrement(w, x, c);
     }
 
-    string name("New w:");
-    w.NiceOutput(name);
+    stringstream wname;
+    wname << "w(" << stepNbr + 1 << "):" << ends;
+    w.NiceVectorOutput(wname.str());
 
     double prekid(0);
     cout << "For continue input any number: ";
@@ -40,7 +44,7 @@ void ConstantPerceptron::Step(DoubleMatrix& w, DoubleMatrix x, double c, double&
 
 void ConstantPerceptron::InputDataAndCalculate()
 {
-    cout << "Input how many vectors you will use:";
+    cout << "Input how many vectors x you will use:";
     int nbrVectors = 0;
     cin >> nbrVectors;
     int m = 0;
@@ -65,9 +69,9 @@ void ConstantPerceptron::InputDataAndCalculate()
 
     int countPositive = 0;
     stepNbr = 0;
+    double functionForX = 0.0;
     while (true)
     {
-        double functionForX = 0.0;
         int index = stepNbr % nbrVectors;
         Step(w, xVectors[index], c, functionForX);
         if (functionForX > 0)
@@ -76,10 +80,12 @@ void ConstantPerceptron::InputDataAndCalculate()
             countPositive=0;
         if (countPositive == nbrVectors)
         {
-            cout << "End" << endl;
+            cout << "End of method." << endl;
             break;
         }
     }
-
+    double prekid(0);
+    cout << "For end input any number: ";
+    cin >> prekid;
     return;
 }

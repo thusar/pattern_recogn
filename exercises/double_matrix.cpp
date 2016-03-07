@@ -88,6 +88,18 @@ void DoubleMatrix::NiceOutput(std::string print_name)
     }
 }
 
+// write vector in row to console
+void DoubleMatrix::NiceVectorOutput(std::string print_name)
+{
+    std::cout << print_name;
+    for (int i = 0; i < m; i++)
+    {
+        std::cout << "  " << A[i][0];
+    }
+    std::cout << std::endl;
+}
+
+
 // write matrix in rows and columns to file file_name
 void DoubleMatrix::NiceOutputToFile(std::string file_name)
 {
@@ -158,7 +170,7 @@ double DoubleMatrix::ScalarProduct(DoubleMatrix B)
         return 0.0;
     }
     double scalarProduct = 0.0;
-    for (int k = 0; k < n; k ++)
+    for (int k = 0; k < At.n; k ++)
         scalarProduct += At.A[0][k] * B.A[k][0];
     return scalarProduct;
 }

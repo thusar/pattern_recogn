@@ -25,6 +25,8 @@ public:
 	void OutputToConsole(std::string print_name);
     // write matrix in rows and column to console
     void NiceOutput(std::string print_name);
+    // write vector in row to console
+    void NiceVectorOutput(std::string print_name);
     // write matrix in rows and columns to file file_name
     void NiceOutputToFile(std::string file_name);
     
