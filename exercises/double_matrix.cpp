@@ -3,27 +3,29 @@
 
 #include "double_matrix.h"
 
-using namespace std;
-
 // default constructor
 DoubleMatrix::DoubleMatrix()
 {
-    m = 0;
-    n = 0;
-    A = 0;
+    m = 1;
+    n = 1;
+    A.resize(m);
+    A[0].resize(n);
+    A[0][0] = 1.0;
 }
 
 // matrix A with m rows and n columns initialized to zeros 
-DoubleMatrix::DoubleMatrix(int m, int n)
+DoubleMatrix::DoubleMatrix(int inputm, int inputn)
 {
-    (*this).m = m;
-    (*this).n = n;
-    A = new double*[m]{ };
-    for (int i = 0; i < m; i++)
-        A[i] = new double[n]{ };
-	for (int i = 0; i < m; i++)
-        for (int j = 0; j < n; j++)
-            A[i][j] = 0;
+    m = inputm;
+    n = inputn;
+    int i, j;
+    A.resize(m);
+	for (i = 0; i < m; i++)
+	{
+		A[i].resize(n);
+        for (j = 0; j < n; j++)
+        	A[i][j] = 0.0;
+	}
 }
 
 // copy constructor A = B
@@ -31,71 +33,63 @@ DoubleMatrix::DoubleMatrix(const DoubleMatrix& B)
 {
     m = B.m;
     n = B.n;
-    A = new double*[m]{ };
+    A.resize(m);
     for (int i = 0; i < m; i++)
-        A[i] = new double[n]{ };
-    for (int i = 0; i < m; i++)
+	{
+		A[i].resize(n);
         for (int j = 0; j < n; j++)
             A[i][j] = B.A[i][j];
+	}
 }
 
 // default destructor
 DoubleMatrix::~DoubleMatrix()
 {
-    for (int i = 0; i < m; i++)
-    {
-        delete[] A[i];
-        A[i] = 0;
-    }
-    delete[] A;
-    m = 0;
-    n = 0;
-    A = 0;
 }
 
 // Input and output
 // input from console to matrix with name print_name
-void DoubleMatrix::InputFromConsole(string print_name)
+void DoubleMatrix::InputFromConsole(std::string print_name)
 {
     for (int i = 0; i < m; i++)
 	    for (int j = 0; j < n; j++)
         {
-            cout << print_name.c_str() << "[" << i + 1 << "," << j + 1 << "]=";
-            cin >> A[i][j];
+            std::cout << print_name.c_str() << "[" << i + 1 << "," << j + 1 << "]=";
+            std::cin >> A[i][j];
         }
 }
 
 // input from file with m rows and n columns
-void DoubleMatrix::InputFromFile(string file_name, int m, int n)
+void DoubleMatrix::InputFromFile(std::string file_name, int m, int n)
 {
 }
 
 // write matrix print_name to console entry by entry
-void DoubleMatrix::OutputToConsole(string print_name)
+void DoubleMatrix::OutputToConsole(std::string print_name)
 {
     for (int i = 0; i < m; i++)
         for (int j = 0; j < n; j++)
         {
-            cout << print_name.c_str() << "[" << i + 1 << "," << j + 1 << "]=" << A[i][j];
+            std::cout << print_name.c_str() << "[" << i + 1 << "," << j + 1 << "]=" << A[i][j];
         }
 }
 
 // write matrix in rows and columns to console
-void DoubleMatrix::NiceOutput(string print_name)
+void DoubleMatrix::NiceOutput(std::string print_name)
 {
-    cout << print_name << endl;
+    std::cout << print_name << std::endl;
     for (int i = 0; i < m; i++)
     {
         for (int j = 0; j < n; j++)
         {
-            cout << A[i][j] << "  ";
+            std::cout << A[i][j] << "  ";
         }
-        cout << endl;
+        std::cout << std::endl;
     }
 }
 
 // write matrix in rows and columns to file file_name
-void DoubleMatrix::NiceOutputToFile(string file_name)
+void DoubleMatrix::NiceOutputToFile(std::string file_name)
 {
 
 }
@@ -106,7 +100,7 @@ DoubleMatrix DoubleMatrix::operator+(DoubleMatrix B)
 {
     if (m != B.m || n != B.n)
     {
-        cout << "Sum of two matrices is impossible." << endl;
+        std::cout << "Sum of two matrices is impossible." << std::endl;
         return *this;
     }
     for (int i = 0; i < m; i++)
@@ -127,10 +121,11 @@ DoubleMatrix DoubleMatrix::operator*(double c)
 // transposition
 DoubleMatrix DoubleMatrix::Transpose()
 {
+    DoubleMatrix B(n, m);
     for (int i = 0; i < m; i++)
         for (int j = 0; j < n; j++)
-            A[j][i] = A[i][j];
-    return *this;
+            B.A[j][i] = A[i][j];
+    return B;
 }
 
 // Matrix multiplication
@@ -139,13 +134,13 @@ DoubleMatrix DoubleMatrix::operator*(DoubleMatrix B)
 {
     if (n != B.m)
     {
-        cout << "Multiplication of two matrices is impossible." << endl;
+        std::cout << "Multiplication of two matrices is impossible." << std::endl;
         return *this;
     }
     for (int i = 0; i < m; i++)
         for (int j = 0; j < n; j++)
         {
-            double sum{ 0 };
+            double sum = 0.0;
             for (int k = 0; k < n; k ++)
                 sum += A[i][k] * B.A[k][j];
             A[i][j] = sum;
@@ -159,49 +154,44 @@ double DoubleMatrix::ScalarProduct(DoubleMatrix B)
     DoubleMatrix At = Transpose();
     if (At.n != B.m || At.m != 1 || B.n != 1)
     {
-        cout << "Scalar product of two vectors is impossible." << endl;
+        std::cout << "Scalar product of two vectors is impossible." << std::endl;
         return 0.0;
     }
-    double scalarProduct{0.0};
-    for (int k = 0; k < At.n; k ++)
+    double scalarProduct = 0.0;
+    for (int k = 0; k < n; k ++)
         scalarProduct += At.A[0][k] * B.A[k][0];
     return scalarProduct;
 }
 
 // Row operations
 // row addition, that is adding a row k to row l
-DoubleMatrix DoubleMatrix::RowAddition(int k, int l)
+void DoubleMatrix::RowAddition(int k, int l)
 {
-    return *this;
 }
 
 // row multiplication, that is multiply row entries by a non-zero constant
-DoubleMatrix DoubleMatrix::RowMultiplication(int k, double c)
+void DoubleMatrix::RowMultiplication(int k, double c)
 {
-    return *this;
 }
 
 // swap rows k and l in input matrix
-DoubleMatrix DoubleMatrix::SwapRows(int k, int l)
+void DoubleMatrix::SwapRows(int k, int l)
 {
     if (k == l)
     {
-        cout << "Swaping rows is impossible." << endl;
-        return *this;
+        std::cout << "Swaping rows is impossible." << std::endl;
     }
     for (int j = 0; j < n; j++)
     {
-        double temp{ A[k][j] };
+        double temp = A[k][j] ;
         A[k][j] = A[l][j];
         A[l][j] = temp;
     }
-    return *this;
 }
 
 // Submatrix - from matrix is deleted row k and column l
-DoubleMatrix DoubleMatrix::Submatrix(int k, int l)
+void DoubleMatrix::Submatrix(int k, int l)
 {
-    return *this;
 }
 
 // Main operations
@@ -216,13 +206,13 @@ double DoubleMatrix::SarrusDeterminant()
     return 1.0;
 }
 
-DoubleMatrix DoubleMatrix::GaussElimination()
+void DoubleMatrix::GaussElimination()
 {
-    int min_dim = min(m, n);
+    int min_dim = std::min(m, n);
     for (int k = 0; k < min_dim; k++)
     {
-        int maxi { k };
-        double maxa { A[k][k] };
+        int maxi = k;
+        double maxa = A[k][k];
         for (int i = k + 1; i < m; i++)
         {
             if (A[i][k] > maxa)
@@ -233,22 +223,21 @@ DoubleMatrix DoubleMatrix::GaussElimination()
         }
         if (maxa == 0)
             throw ("Matrix is singular.");
-        *this = SwapRows(k, maxi);
+        SwapRows(k, maxi);
         for (int i = k + 1; i < m; i++)
         {
-            double factor{ A[i][k] / A[k][k] };
+            double factor = A[i][k] / A[k][k];
             for (int j = k + 1; j < n; j++)
                 A[i][j] = A[i][j] - factor * A[k][j];
             A[i][k] = 0;
         }
     }
-    return *this;
 }
 
 // determinant of matrix processed with Gauss Elimination
 double DoubleMatrix::MatrixDeterminant()
 {
-    double determinant { 1.0 };
+    double determinant = 1.0;
     for (int i = 0; i < m; i++)
         determinant = determinant * A[i][i];
     return determinant;

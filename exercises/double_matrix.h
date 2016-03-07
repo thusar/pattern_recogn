@@ -5,7 +5,7 @@ class DoubleMatrix
 public:
 	int m;
 	int n;
-	double** A;
+	std::vector <std::vector<double> > A;
 
     // default constructor
 	DoubleMatrix();
@@ -44,14 +44,14 @@ public:
 
     // Row operations
     // row addition, that is adding a row k to row l
-	DoubleMatrix RowAddition(int k, int l);
+	void RowAddition(int k, int l);
     // row multiplication, that is multiply row entries by a non-zero constant
-	DoubleMatrix RowMultiplication(int k, double c);
+	void RowMultiplication(int k, double c);
 	// swap rows k and l, interchanging two rows of matrix
-	DoubleMatrix SwapRows(int k, int l);
+	void SwapRows(int k, int l);
 
     // Sub-matrix - from matrix is deleted row k and column l
-	DoubleMatrix Submatrix(int k, int l);
+	void Submatrix(int k, int l);
 
     // Main operations
     // trace - sum of diagonal entries
@@ -60,6 +60,6 @@ public:
     double SarrusDeterminant();
 
 
-    DoubleMatrix GaussElimination();
+    void GaussElimination();
 	double MatrixDeterminant();
 };

@@ -41,21 +41,21 @@ void ConstantPerceptron::Step(DoubleMatrix& w, DoubleMatrix x, double c, double&
 void ConstantPerceptron::InputDataAndCalculate()
 {
     cout << "Input how many vectors you will use:";
-    int nbrVectors = { 0 };
+    int nbrVectors = 0;
     cin >> nbrVectors;
-    int m = { 0 };
+    int m = 0;
     cout << "Input number of rows in vector:";
     cin >> m;
     cout << "Input constant c:";
-    double c { 0.0 };
+    double c = 0.0;
     cin >> c;
-    DoubleMatrix* xVectors = 0;
-    xVectors = new DoubleMatrix[nbrVectors] { };
-    for (int i = 0; i < m; i++)
+    std::vector<DoubleMatrix> xVectors;
+    xVectors.resize(nbrVectors);
+    for (int i = 0; i < nbrVectors; i++)
     {
         xVectors[i] = DoubleMatrix(m, 1);
-        stringstream name("");
-        name << "Vector nbr. " << i + 1 << ends;
+        stringstream name;
+        name << "Vector x " << i + 1 << ends;
         xVectors[i].InputFromConsole(name.str());
     }
     DoubleMatrix w(m, 1);
@@ -63,12 +63,12 @@ void ConstantPerceptron::InputDataAndCalculate()
     name << "Vector w " << ends;
     w.InputFromConsole(name.str());
 
-    int countPositive { 0 };
+    int countPositive = 0;
     stepNbr = 0;
     while (true)
     {
-        double functionForX { 0.0 };
-        int index { stepNbr % nbrVectors };
+        double functionForX = 0.0;
+        int index = stepNbr % nbrVectors;
         Step(w, xVectors[index], c, functionForX);
         if (functionForX > 0)
             countPositive++;

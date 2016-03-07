@@ -1,7 +1,8 @@
-class ConstantPerceptron: public Method
+#pragma once
+
+class ConstantPerceptron
 {
 public:
-    void Method() {}
     int stepNbr;
     void InputDataAndCalculate();
     void Step(DoubleMatrix& w, DoubleMatrix x, double c, double& functionForX);

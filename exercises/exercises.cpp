@@ -15,11 +15,11 @@ int main()
 	cout << "Perceptron with constant increment : 1" << endl;
 	cout << "Perceptron with partial increment  : 2" << endl;
 	cout << "Select method:                        " << endl;
-	int methodNbr{ 0 };
+	int methodNbr;
 	cin >> methodNbr;
 	if (methodNbr == 1)
 	{
-        ConstantPerceptron method1 {};
+        ConstantPerceptron method1;
 		method1.InputDataAndCalculate();
 	}
 	else if (methodNbr == 2)
