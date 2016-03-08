@@ -121,7 +121,7 @@ DoubleMatrix DoubleMatrix::operator+(DoubleMatrix B)
     return *this;
 }
 
-// scalar multiplication
+// scalar multiplication A = A * c
 DoubleMatrix DoubleMatrix::operator*(double c)
 {
     for (int i = 0; i < m; i++)
@@ -149,10 +149,11 @@ DoubleMatrix DoubleMatrix::operator*(DoubleMatrix B)
         std::cout << "Multiplication of two matrices is impossible." << std::endl;
         return *this;
     }
+    double sum = 0.0;
     for (int i = 0; i < m; i++)
         for (int j = 0; j < n; j++)
         {
-            double sum = 0.0;
+            sum = 0.0;
             for (int k = 0; k < n; k ++)
                 sum += A[i][k] * B.A[k][j];
             A[i][j] = sum;
@@ -193,9 +194,10 @@ void DoubleMatrix::SwapRows(int k, int l)
     {
         std::cout << "Swaping rows is impossible." << std::endl;
     }
+    double temp;
     for (int j = 0; j < n; j++)
     {
-        double temp = A[k][j] ;
+        temp = A[k][j] ;
         A[k][j] = A[l][j];
         A[l][j] = temp;
     }
@@ -221,10 +223,13 @@ double DoubleMatrix::SarrusDeterminant()
 void DoubleMatrix::GaussElimination()
 {
     int min_dim = std::min(m, n);
+    int maxi = -1;
+    double maxa = 0.0;
+    double factor = 1.0;
     for (int k = 0; k < min_dim; k++)
     {
-        int maxi = k;
-        double maxa = A[k][k];
+        maxi = k;
+        maxa = A[k][k];
         for (int i = k + 1; i < m; i++)
         {
             if (A[i][k] > maxa)
@@ -238,7 +243,7 @@ void DoubleMatrix::GaussElimination()
         SwapRows(k, maxi);
         for (int i = k + 1; i < m; i++)
         {
-            double factor = A[i][k] / A[k][k];
+            factor = A[i][k] / A[k][k];
             for (int j = k + 1; j < n; j++)
                 A[i][j] = A[i][j] - factor * A[k][j];
             A[i][k] = 0;
