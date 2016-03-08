@@ -2,3 +2,8 @@
 /.project
 /.cproject
 /.settings/
+/Debug/
+/pattern_recogn.suo
+/pattern_recogn.vcxproj.user
+/pattern_recogn.sdf
+/pattern_recogn.opensdf
