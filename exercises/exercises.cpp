@@ -10,23 +10,24 @@
 using namespace std;
 
 
-int main()
+bool Exercises::SelectAndRunTasks()
 {
 	cout << "Perceptron with constant increment : 1" << endl;
 	cout << "Perceptron with partial increment  : 2" << endl;
 	cout << "Select method                      : ";
-	int methodNbr;
-	cin >> methodNbr;
-	if (methodNbr == 1)
+	int method;
+	cin >> method;
+	bool result;
+	if (method == 1)
 	{
         ConstantPerceptron method1;
-		method1.InputDataAndCalculate();
+		result = method1.InputDataAndCalculate();
 	}
-	else if (methodNbr == 2)
+	else if (method == 2)
 	{
 
 	}
-	return 0;
+	return result;
 
 }
 

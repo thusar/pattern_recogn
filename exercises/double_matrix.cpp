@@ -54,7 +54,7 @@ void DoubleMatrix::InputFromConsole(std::string print_name)
     for (int i = 0; i < m; i++)
 	    for (int j = 0; j < n; j++)
         {
-            std::cout << print_name.c_str() << "[" << i + 1 << "," << j + 1 << "]=";
+            std::cout << print_name.c_str() << "[" << i + 1 << "," << j + 1 << "]= ";
             std::cin >> A[i][j];
         }
 }
@@ -70,7 +70,7 @@ void DoubleMatrix::OutputToConsole(std::string print_name)
     for (int i = 0; i < m; i++)
         for (int j = 0; j < n; j++)
         {
-            std::cout << print_name.c_str() << "[" << i + 1 << "," << j + 1 << "]=" << A[i][j];
+            std::cout << print_name.c_str() << "[" << i + 1 << "," << j + 1 << "]= " << A[i][j];
         }
 }
 

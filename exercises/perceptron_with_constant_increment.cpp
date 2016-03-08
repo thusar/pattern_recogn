@@ -7,15 +7,15 @@
 using namespace std;
 
 
-void ConstantPerceptron::InputDataAndCalculate()
+bool ConstantPerceptron::InputDataAndCalculate()
 {
-    cout << "Input how many vectors x you will use: ";
+    cout << "Input how many vectors x you will use : ";
     int nbrVectors = 0;
     cin >> nbrVectors;
     int m = 0;
-    cout << "Input number of rows in vector x: ";
+    cout << "Input number of rows in vector x      : ";
     cin >> m;
-    cout << "Input constant c:";
+    cout << "Input constant c                      : ";
     double c = 0.0;
     cin >> c;
     std::vector<DoubleMatrix> xVectors;
@@ -56,7 +56,7 @@ void ConstantPerceptron::InputDataAndCalculate()
     double prekid(0);
     cout << "For end input any number: ";
     cin >> prekid;
-    return;
+    return true;
 }
 
 void ConstantPerceptron::Step(DoubleMatrix& w, DoubleMatrix x, double c, double& functionForX)
